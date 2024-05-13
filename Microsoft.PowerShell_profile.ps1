@@ -24,7 +24,10 @@ oh-my-posh --init --shell pwsh --config "$env:posh_themes_path\powerlevel10k_rai
 
 Set-PSReadLineOption -PredictionSource HistoryAndPlugin
 Set-PSReadLineOption -PredictionViewStyle ListView
-Set-Location 'E:\scripts\Powershell'
+
+if (Test-Path 'E:\scripts\Powershell') {
+    Set-Location 'E:\scripts\Powershell'
+}
 
 $env:PATH = $env:PATH + ';C:\Program Files\Oracle\VirtualBox'
 
@@ -43,15 +46,15 @@ Set-PSReadLineOption -Color @{
 
 function Update-PowerShell {
     if (-not $global:canConnectToGitHub) {
-        Write-Host "Skipping PowerShell update check due to GitHub.com not responding within 1 second." -ForegroundColor Yellow
+        Write-Host 'Skipping PowerShell update check due to GitHub.com not responding within 1 second.' -ForegroundColor Yellow
         return
     }
 
     try {
-        Write-Host "Checking for PowerShell updates..." -ForegroundColor Cyan
+        Write-Host 'Checking for PowerShell updates...' -ForegroundColor Cyan
         $updateNeeded = $false
         $currentVersion = $PSVersionTable.PSVersion.ToString()
-        $gitHubApiUrl = "https://api.github.com/repos/PowerShell/PowerShell/releases/latest"
+        $gitHubApiUrl = 'https://api.github.com/repos/PowerShell/PowerShell/releases/latest'
         $latestReleaseInfo = Invoke-RestMethod -Uri $gitHubApiUrl
         $latestVersion = $latestReleaseInfo.tag_name.Trim('v')
         if ($currentVersion -lt $latestVersion) {
@@ -59,11 +62,11 @@ function Update-PowerShell {
         }
 
         if ($updateNeeded) {
-            Write-Host "Updating PowerShell..." -ForegroundColor Yellow
-            winget upgrade "Microsoft.PowerShell" --accept-source-agreements --accept-package-agreements
-            Write-Host "PowerShell has been updated. Please restart your shell to reflect changes" -ForegroundColor Magenta
+            Write-Host 'Updating PowerShell...' -ForegroundColor Yellow
+            winget upgrade 'Microsoft.PowerShell' --accept-source-agreements --accept-package-agreements
+            Write-Host 'PowerShell has been updated. Please restart your shell to reflect changes' -ForegroundColor Magenta
         } else {
-            Write-Host "Your PowerShell is up to date." -ForegroundColor Green
+            Write-Host 'Your PowerShell is up to date.' -ForegroundColor Green
         }
     } catch {
         Write-Error "Failed to update PowerShell. Error: $_"
@@ -109,8 +112,8 @@ function stop-vm {
         & 'C:\Program Files\Oracle\VirtualBox\VBoxManage' controlvm $vm acpipowerbutton
     }
 
-    if ($restart.IsPresent){
-       & 'C:\Program Files\Oracle\VirtualBox\VBoxManage' controlvm $vm reset 
+    if ($restart.IsPresent) {
+        & 'C:\Program Files\Oracle\VirtualBox\VBoxManage' controlvm $vm reset 
     }
 
 }
