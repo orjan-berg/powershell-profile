@@ -158,32 +158,6 @@ function disable-pihole {
     Set-DnsClientServerAddress 'Wi-Fi' -ResetServerAddresses
 }
 
-# functions from Chris Titus
-# Set up command prompt and window title. Use UNIX-style convention for identifying 
-# whether user is elevated (root) or not. Window title shows current version of PowerShell
-# and appends [ADMIN] if appropriate for easy taskbar identification
-<#function prompt { 
-    if ($isAdmin) {
-        "[" + (Get-Location) + "] # " 
-    } else {
-        "[" + (Get-Location) + "] $ "
-    }
-}
-#>
-
-
-# Simple function to start a new elevated process. If arguments are supplied then 
-# a single command is started with admin rights; if not then a new admin instance
-# of PowerShell is started.
-function admin {
-    if ($args.Count -gt 0) {   
-        $argList = "& '" + $args + "'"
-        Start-Process "$psHome\pwsh.exe" -Verb runAs -ArgumentList $argList
-    } else {
-        Start-Process "$psHome\pwsh.exe" -Verb runAs
-    }
-}
-
 function reload-profile {
     & $PROFILE
 }
