@@ -202,3 +202,4 @@ if (Test-Path($ChocolateyProfile)) {
     Import-Module "$ChocolateyProfile"
 }
 
+. I:\Functions\install-exSsms.ps1
