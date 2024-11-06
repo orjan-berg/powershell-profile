@@ -15,7 +15,7 @@ if (-not (Get-Module -ListAvailable -Name Terminal-Icons)) {
 Import-Module -Name Terminal-Icons
 
 # Import-Module -Name dbatools
-oh-my-posh --init --shell pwsh --config "$env:posh_themes_path\powerlevel10k_rainbow.omp.json" | Invoke-Expression
+oh-my-posh init pwsh --config "$env:posh_themes_path\powerlevel10k_rainbow.omp.json" | Invoke-Expression
 
 
 # Load editor services command suite
