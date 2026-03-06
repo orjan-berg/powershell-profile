@@ -15,8 +15,10 @@ if (-not (Get-Module -ListAvailable -Name Terminal-Icons)) {
 Import-Module -Name Terminal-Icons
 
 # Import-Module -Name dbatools
-oh-my-posh init pwsh --config "$env:posh_themes_path\powerlevel10k_rainbow.omp.json" | Invoke-Expression
+# oh-my-posh init pwsh --config "$env:posh_themes_path\powerlevel10k_rainbow.omp.json" | Invoke-Expression
 
+# Using starship prompt for cross-shell compatibility
+Invoke-Expression (&starship init powershell)
 
 # Load editor services command suite
 # Import-CommandSuite
@@ -81,16 +83,16 @@ function start-vm {
     param (
         [Parameter(Mandatory)]
         [string] $vm,
- 
+
         [Parameter()]
         [switch] $Headless
     )
- 
+
     if ($Headless.IsPresent) {
         & 'C:\Program Files\Oracle\VirtualBox\VBoxManage.exe' startvm $vm --type Headless
         Start-Sleep -Seconds 10
         Write-Host 'IP: ' -NoNewline -ForegroundColor Yellow
-        & 'C:\Program Files\Oracle\VirtualBox\VBoxManage.exe' guestproperty get $vm /VirtualBox/GuestInfo/Net/0/V4/IP 
+        & 'C:\Program Files\Oracle\VirtualBox\VBoxManage.exe' guestproperty get $vm /VirtualBox/GuestInfo/Net/0/V4/IP
     } else {
         & 'C:\Program Files\Oracle\VirtualBox\VBoxManage.exe' startvm $vm --type GUI
     }
@@ -113,7 +115,7 @@ function stop-vm {
     }
 
     if ($restart.IsPresent) {
-        & 'C:\Program Files\Oracle\VirtualBox\VBoxManage' controlvm $vm reset 
+        & 'C:\Program Files\Oracle\VirtualBox\VBoxManage' controlvm $vm reset
     }
 
 }
@@ -125,7 +127,7 @@ function get-vm {
         [Parameter()]
         [switch] $Running
     )
- 
+
     if ($Running.IsPresent) {
         & 'C:\Program Files\Oracle\VirtualBox\VBoxManage.exe' list runningvms
     } else {
