@@ -79,6 +79,7 @@ Update-PowerShell
 
 
 # my functions
+<#
 function start-vm {
     param (
         [Parameter(Mandatory)]
@@ -160,6 +161,7 @@ function disable-pihole {
     Set-DnsClientServerAddress 'Wi-Fi' -ResetServerAddresses
 }
 
+#>
 function reload-profile {
     & $PROFILE
 }
